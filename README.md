@@ -1,2 +1,2 @@
-# It-s-Me---Frontend
+# Its-Me-Frontend
 Repositorio dedicado al desarrollo frontend del proyecto "It's Me"
