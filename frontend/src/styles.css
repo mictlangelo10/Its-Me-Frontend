@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+}
+
+.header,
+.footer {
+  background-color: #111;
+  padding: 10px 20px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+  background-color: #000;
+}
+
+router-outlet {
+  flex: 1;
+}
