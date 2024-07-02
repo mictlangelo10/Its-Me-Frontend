@@ -1,34 +1,169 @@
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card mt-5">
-                <div class="card-body">
-                    <h3 class="card-title text-center">Registro</h3>
-                    <form>
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Introduce tu nombre" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="username" class="form-label">Nombre de usuario</label>
-                            <input type="text" class="form-control" id="username" placeholder="Introduce tu nombre de usuario" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="edad" class="form-label">Edad</label>
-                            <input type="number" class="form-control" id="edad" placeholder="Introduce tu edad" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="email" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" id="email" placeholder="Introduce tu correo electrónico" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="password" class="form-label">Contraseña</label>
-                            <input type="password" class="form-control" id="password" placeholder="Introduce tu contraseña" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Registrar</button>
-                    </form>
-                </div>
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mt-5">
+        <div class="card-body">
+          <h3 class="card-title text-center">Registro</h3>
+          <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input
+                formControlName="nombre"
+                class="form-control"
+                id="nombre"
+                placeholder="Introduce tu nombre"
+                [class.is-invalid]="nombre.invalid && nombre.touched"
+                required
+              />
+              <div
+                *ngIf="nombre.errors?.required && nombre.touched"
+                class="text-danger"
+              >
+                El nombre es requerido.
+              </div>
+              <div
+                *ngIf="nombre.errors?.minlength && nombre.touched"
+                class="text-danger"
+              >
+                El nombre debe tener al menos 20 caracteres.
+              </div>
             </div>
+            <div class="mb-3">
+              <label for="username" class="form-label">Nombre de usuario</label>
+              <input
+                formControlName="username"
+                class="form-control"
+                id="username"
+                placeholder="Introduce tu nombre de usuario"
+                [class.is-invalid]="username.invalid && username.touched"
+                required
+              />
+              <div
+                *ngIf="username.errors?.required && username.touched"
+                class="text-danger"
+              >
+                El nombre de usuario es requerido.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="edad" class="form-label">Edad</label>
+              <input
+                formControlName="edad"
+                type="number"
+                class="form-control"
+                id="edad"
+                placeholder="Introduce tu edad"
+                [class.is-invalid]="edad.invalid && edad.touched"
+                required
+              />
+              <div
+                *ngIf="edad.errors?.required && edad.touched"
+                class="text-danger"
+              >
+                La edad es requerida.
+              </div>
+              <div *ngIf="edad.errors?.min && edad.touched" class="text-danger">
+                La edad debe ser mayor a 14 años.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo electrónico</label>
+              <input
+                formControlName="email"
+                type="email"
+                class="form-control"
+                id="email"
+                placeholder="Introduce tu correo electrónico"
+                [class.is-invalid]="email.invalid && email.touched"
+                required
+              />
+              <div
+                *ngIf="email.errors?.required && email.touched"
+                class="text-danger"
+              >
+                El correo electrónico es requerido.
+              </div>
+              <div
+                *ngIf="email.errors?.email && email.touched"
+                class="text-danger"
+              >
+                El correo electrónico debe ser válido.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input
+                formControlName="password"
+                type="password"
+                class="form-control"
+                id="password"
+                placeholder="Introduce tu contraseña"
+                [class.is-invalid]="password.invalid && password.touched"
+                required
+              />
+              <div
+                *ngIf="password.errors?.required && password.touched"
+                class="text-danger"
+              >
+                La contraseña es requerida.
+              </div>
+              <div
+                *ngIf="password.errors?.minlength && password.touched"
+                class="text-danger"
+              >
+                La contraseña debe tener al menos 8 caracteres.
+              </div>
+              <div
+                *ngIf="password.errors?.passwordStrength && password.touched"
+                class="text-danger"
+              >
+                La contraseña debe incluir al menos una letra mayúscula, un
+                número y un carácter especial.
+              </div>
+            </div>
+            <div class="mb-3">
+              <label for="confirmPassword" class="form-label"
+                >Repite Contraseña</label
+              >
+              <input
+                formControlName="confirmPassword"
+                type="password"
+                class="form-control"
+                id="confirmPassword"
+                placeholder="Introduce tu contraseña"
+                [class.is-invalid]="
+                  confirmPassword.invalid && confirmPassword.touched
+                "
+                required
+              />
+              <div
+                *ngIf="
+                  confirmPassword.errors?.required && confirmPassword.touched
+                "
+                class="text-danger"
+              >
+                La confirmación de la contraseña es requerida.
+              </div>
+              <div
+                *ngIf="
+                  confirmPassword.errors?.passwordMismatch &&
+                  confirmPassword.touched
+                "
+                class="text-danger"
+              >
+                Las contraseñas no coinciden.
+              </div>
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary w-100"
+              [disabled]="registerForm.invalid"
+            >
+              Registrar
+            </button>
+          </form>
         </div>
+      </div>
     </div>
+  </div>
 </div>
