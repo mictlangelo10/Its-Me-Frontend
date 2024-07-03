@@ -7,6 +7,7 @@ import {
   ValidationErrors,
 } from '@angular/forms';
 import { Usuario } from '../../models/usuario';
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-register',
@@ -17,7 +18,7 @@ export class RegisterComponent {
   registerForm: FormGroup;
   usuario: Usuario;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private usuarioService: UsuarioService) {
     this.registerForm = this.fb.group(
       {
         nombre: ['', [Validators.required, Validators.minLength(20)]],
@@ -49,8 +50,14 @@ export class RegisterComponent {
         descripcion: '', // Puedes agregar un campo de descripción en el formulario si es necesario
         foto: '', // Puedes agregar un campo de foto en el formulario si es necesario
       };
-      console.log(this.usuario);
-      // Aquí puedes llamar al servicio para guardar el usuario en la base de datos
+      this.usuarioService.createUsuario(this.usuario).subscribe(
+        (response) => {
+          console.log('Usuario registrado correctamente', response);
+        },
+        (error) => {
+          console.error('Error al registrar el usuario', error);
+        }
+      );
     } else {
       // Manejar errores de validación
       console.log('Formulario no válido');
