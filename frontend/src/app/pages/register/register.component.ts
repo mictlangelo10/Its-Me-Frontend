@@ -8,6 +8,7 @@ import {
 } from '@angular/forms';
 import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../services/usuario.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +19,11 @@ export class RegisterComponent {
   registerForm: FormGroup;
   usuario: Usuario;
 
-  constructor(private fb: FormBuilder, private usuarioService: UsuarioService) {
+  constructor(
+    private fb: FormBuilder,
+    private usuarioService: UsuarioService,
+    private toastr: ToastrService
+  ) {
     this.registerForm = this.fb.group(
       {
         nombre: ['', [Validators.required, Validators.minLength(20)]],
@@ -52,9 +57,33 @@ export class RegisterComponent {
       };
       this.usuarioService.createUsuario(this.usuario).subscribe(
         (response) => {
+          this.toastr.success('Usuario registrado correctamente');
           console.log('Usuario registrado correctamente', response);
         },
         (error) => {
+          if (error.status === 400) {
+            if (error.error.message === 'El email ya existe') {
+              this.toastr.error(
+                'El correo electrónico ya existe',
+                'Error de registro'
+              );
+            } else if (error.error.message === 'El username ya existe') {
+              this.toastr.error(
+                'El nombre de usuario ya existe',
+                'Error de registro'
+              );
+            } else {
+              this.toastr.error(
+                'Error al registrar el usuario',
+                'Error de registro'
+              );
+            }
+          } else {
+            this.toastr.error(
+              'Error al registrar el usuario',
+              'Error de registro'
+            );
+          }
           console.error('Error al registrar el usuario', error);
         }
       );

@@ -1,3 +1,37 @@
+/* ngx-toastr styles */
+.toast-container {
+  position: fixed;
+  z-index: 999999;
+}
+.toast-container .toast {
+  background-color: #f0ad4e;
+  border: 1px solid #f5e79e;
+  border-radius: 4px;
+  box-shadow: 0 0 12px #999999;
+  padding: 15px;
+  color: #ffffff;
+  margin: 15px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+.toast-container .toast:hover {
+  opacity: 1;
+}
+.toast-container .toast-success {
+  background-color: #5cb85c;
+}
+.toast-container .toast-error {
+  background-color: #d9534f;
+}
+.toast-container .toast-info {
+  background-color: #5bc0de;
+}
+.toast-container .toast-warning {
+  background-color: #f0ad4e;
+}
+/* Fin de los estilos ngx-toastr */
+
+/* Agrega tus estilos personalizados aquí */
 body,
 html {
   margin: 0;
