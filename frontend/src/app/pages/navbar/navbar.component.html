@@ -5,5 +5,10 @@
     <i class="fa fa-linkedin"></i>
   </div>
   <div class="title">IT'S ME</div>
-  <button class="book-now">Login</button>
+  <button *ngIf="!isLoggedIn()" class="book-now" (click)="navigateToLogin()">
+    Login
+  </button>
+  <button *ngIf="isLoggedIn()" class="book-now" (click)="confirmLogout()">
+    Logout
+  </button>
 </header>
