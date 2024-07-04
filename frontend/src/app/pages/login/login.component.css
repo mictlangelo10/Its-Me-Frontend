@@ -1,0 +1,12 @@
+.card-title {
+  color: black;
+}
+
+.text-center .login-link {
+  color: black !important;
+  text-decoration: none;
+}
+
+.text-center .login-link:hover {
+  color: darkgray !important;
+}

@@ -1,42 +1,49 @@
-<body>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card mt-5">
-          <div class="card-body">
-            <h3 class="card-title text-center">Login</h3>
-            <form>
-              <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
-                <input
-                  type="username"
-                  class="form-control"
-                  id="username"
-                  placeholder="Ingresa tu username"
-                  required
-                />
-              </div>
-              <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input
-                  type="password"
-                  class="form-control"
-                  id="password"
-                  placeholder="Ingresa tu contraseña"
-                  required
-                />
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Login</button>
-              <div class="text-center mt-3">
-                <a href="#">¡Olvidaste tu contraseña?</a>
-              </div>
-              <div class="text-center mt-3">
-                Aún no tienes cuenta <a href="/register">¡Registrate!</a>
-              </div>
-            </form>
-          </div>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card mt-5">
+        <div class="card-body">
+          <h3 class="card-title text-center">Login</h3>
+          <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <div class="mb-3">
+              <label for="email" class="form-label">Correo Electrónico</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                formControlName="email"
+                placeholder="Ingresa tu correo electrónico"
+                required
+              />
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Contraseña</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                formControlName="contraseña"
+                placeholder="Ingresa tu contraseña"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="btn btn-primary w-100"
+              [disabled]="loginForm.invalid"
+            >
+              Login
+            </button>
+            <div class="text-center mt-3">
+              <a href="#" class="login-link">¡Olvidaste tu contraseña?</a>
+            </div>
+            <div class="text-center mt-3">
+              ¿Aún no tienes cuenta?
+              <a href="/register" class="login-link">¡Registrate!</a>
+            </div>
+          </form>
         </div>
       </div>
     </div>
   </div>
-</body>
+</div>
