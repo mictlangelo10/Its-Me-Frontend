@@ -14,4 +14,6 @@ Para este apartado únicamente se necesita que el puerto corra en el 4200, sin e
 
 2.- Cuando se terminen de instalar los modudlos de node es necesario ejecutar el comndo   ng build  
 
-*Nota: en el paso 2 el comando puede tener variaciones, este comando se utiliza para compilar todo el proyecto y hacer el ejecutable para el deploy, sin embargo, tiene algunas variantes que será necesario investigar para poder verificar si con ese comando se podra deployar en el servidor.*
+*Nota: En el paso 2 el comando puede tener variaciones, este comando se utiliza para compilar todo el proyecto y hacer el ejecutable para el deploy, sin embargo, tiene algunas variantes que será necesario investigar para poder verificar si con ese comando se podra deployar en el servidor.*
+
+*Nota: Esta part está desarrollada en Angular*
