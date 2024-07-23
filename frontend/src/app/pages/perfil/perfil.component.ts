@@ -1,10 +1,28 @@
 import { Component } from '@angular/core';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-perfil',
-  standalone: true,
-  imports: [],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css',
 })
-export class PerfilComponent {}
+export class PerfilComponent {
+  contenidoGuardado: any = null;
+
+  constructor(private modalService: NgbModal) {}
+
+  abrirModal(): void {
+    const modalRef = this.modalService.open(PostComponent);
+    modalRef.result.then((result) => {
+      if (result) {
+        this.contenidoGuardado = result;
+      }
+    }).catch((error) => {
+      console.log(error);
+    });
+  }
+
+  verContenido(): void {
+    // Lógica para mostrar el contenido guardado
+  }
+}

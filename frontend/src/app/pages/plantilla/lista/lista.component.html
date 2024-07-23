@@ -1,0 +1,21 @@
+<div class="template-lista-numerada">
+  <h5>Lista Numerada</h5>
+  <div class="form-group">
+    <label for="listTitle">Nombre de la Lista</label>
+    <input type="text" class="form-control" id="listTitle" required [(ngModel)]="listTitle">
+  </div>
+  <ol>
+    <li *ngFor="let item of items; let i = index">
+      <div class="form-group d-flex align-items-center">
+        <input type="text" class="form-control mr-2" [(ngModel)]="item" placeholder="Elemento {{i + 1}}">
+        <button class="btn btn-danger btn-sm" (click)="eliminarElemento(i)">
+          <i class="bi bi-trash"></i>
+        </button>
+      </div>
+    </li>
+  </ol>
+  <button class="btn btn-secondary btn-sm" (click)="agregarElemento()">
+    <i class="bi bi-plus"></i> Agregar Elemento
+  </button>
+  <button class="btn btn-primary" (click)="guardar()">Guardar</button>
+</div>
