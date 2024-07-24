@@ -15,14 +15,19 @@
       <h2>Mis Categorías</h2>
       <button class="btn btn-primary" data-toggle="modal" data-target="#addCategoryModal">Nueva Categoría</button>
     </div>
-  
-    <div class="row">
-      <div class="col-md-4" >
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title"> category.name </h5>
-          </div>
-        </div>
+
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Categoría</h5>
+        <button class="btn btn-primary" (click)="openModal()">
+          {{ hasContent ? 'Ver Contenido' : 'Agregar Contenido' }}
+        </button>
       </div>
+    
+      <app-modal *ngIf="showModal" 
+                 [contentData]="contentData" 
+                 (save)="saveContent($event)" 
+                 (close)="closeModal()">
+      </app-modal>
     </div>
 </div>
