@@ -7,22 +7,22 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './perfil.component.css',
 })
 export class PerfilComponent {
-  contenidoGuardado: any = null;
+  hasContent: boolean = false;
+  contentData: any;
+  showModal: boolean = false;
 
-  constructor(private modalService: NgbModal) {}
-
-  abrirModal(): void {
-    const modalRef = this.modalService.open(PostComponent);
-    modalRef.result.then((result) => {
-      if (result) {
-        this.contenidoGuardado = result;
-      }
-    }).catch((error) => {
-      console.log(error);
-    });
+  openModal() {
+    this.showModal = true;
+    console.log(this.showModal)
   }
 
-  verContenido(): void {
-    // Lógica para mostrar el contenido guardado
+  closeModal() {
+    this.showModal = false;
+  }
+
+  saveContent(data: any) {
+    this.hasContent = true;
+    this.contentData = data;
+    this.closeModal();
   }
 }

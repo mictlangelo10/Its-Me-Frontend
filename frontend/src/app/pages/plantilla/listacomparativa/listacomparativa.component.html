@@ -1,0 +1,55 @@
+<div class="template-lista-comparativa">
+    <h5>Lista Comparativa</h5>
+    <div class="form-group">
+      <label for="comparativaTitulo">Título</label>
+      <input type="text" class="form-control" id="comparativaTitulo" required [(ngModel)]="comparativaTitulo">
+    </div>
+    <div class="form-group">
+      <label for="columna1Titulo">Título Columna 1</label>
+      <input type="text" class="form-control" id="columna1Titulo" required [(ngModel)]="columna1Titulo">
+    </div>
+    <div class="form-group">
+      <label for="columna2Titulo">Título Columna 2</label>
+      <input type="text" class="form-control" id="columna2Titulo" required [(ngModel)]="columna2Titulo">
+    </div>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th>{{ columna1Titulo }}</th>
+          <th>{{ columna2Titulo }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <table class="table table-bordered">
+              <tbody>
+                <tr *ngFor="let row of columna1Rows; let i = index">
+                  <td>
+                    <input type="text" class="form-control" [(ngModel)]="row">
+                    <button class="btn btn-danger btn-sm" (click)="eliminarFilaColumna1(i)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-secondary btn-sm" (click)="agregarFilaColumna1()">Agregar Fila</button>
+          </td>
+          <td>
+            <table class="table table-bordered">
+              <tbody>
+                <tr *ngFor="let row of columna2Rows; let i = index">
+                  <td>
+                    <input type="text" class="form-control" [(ngModel)]="row">
+                    <button class="btn btn-danger btn-sm" (click)="eliminarFilaColumna2(i)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <button class="btn btn-secondary btn-sm" (click)="agregarFilaColumna2()">Agregar Fila</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-primary" (click)="guardar()">Guardar</button>
+  </div>
+  

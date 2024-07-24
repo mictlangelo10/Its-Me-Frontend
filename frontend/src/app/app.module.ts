@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -13,10 +14,12 @@ import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { FormsModule } from '@angular/forms';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ListacompComponent } from './pages/plantilla/listacomp/listacomp.component';
-import { ImgtextComponent } from './pages/plantilla/imgtext/imgtext.component';
 import { ListaComponent } from './pages/plantilla/lista/lista.component';
+import { ListacomparativaComponent } from './pages/plantilla/listacomparativa/listacomparativa.component';
+import { ImagenComponent } from './pages/plantilla/imagen/imagen.component';
+import { PostComponent } from './pages/plantilla/post/post.component';
+import { ModalComponent } from './pages/modal/modal.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -26,9 +29,12 @@ import { ListaComponent } from './pages/plantilla/lista/lista.component';
     LoginComponent,
     HomeComponent,
     RegisterComponent,
-    ListacompComponent,
-    ImgtextComponent,
     ListaComponent,
+    ListacomparativaComponent,
+    ImagenComponent,
+    PostComponent,
+    ModalComponent,
+    PerfilComponent,
   ],
   imports: [
     BrowserModule,
@@ -41,7 +47,7 @@ import { ListaComponent } from './pages/plantilla/lista/lista.component';
     }),
     SweetAlert2Module.forRoot(), // Configuración de SweetAlert2
     FormsModule,
-    NgbModule,
+    CommonModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
