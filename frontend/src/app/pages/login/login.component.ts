@@ -30,7 +30,7 @@ export class LoginComponent {
       this.usuarioService.login(email, contraseña).subscribe(
         (response) => {
           this.toastr.success('Login exitoso');
-          sessionStorage.setItem('user', JSON.stringify(response.user));
+          sessionStorage.setItem('token', response.token); // Guarda el token
           this.router.navigate(['/perfil']); // Redirige al perfil u otra ruta
         },
         (error) => {

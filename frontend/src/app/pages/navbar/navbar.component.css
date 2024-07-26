@@ -14,6 +14,7 @@ header {
 .title {
   font-size: 24px;
   font-weight: bold;
+  color: #fff;
 }
 
 .book-now {
@@ -22,4 +23,13 @@ header {
   padding: 10px 20px;
   border: none;
   cursor: pointer;
+}
+
+.header-link {
+  color: white; /* Cambia el color del texto a blanco */
+  text-decoration: none; /* Remueve el subrayado */
+}
+
+.header-link:hover {
+  text-decoration: underline; /* Opcional: puedes agregar un estilo hover si lo deseas */
 }

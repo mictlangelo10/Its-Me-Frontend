@@ -9,7 +9,7 @@ import { RegisterComponent } from './pages/register/register.component';
 import { NavbarComponent } from './pages/navbar/navbar.component';
 import { FooterComponent } from './pages/footer/footer.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
@@ -20,6 +20,7 @@ import { ImagenComponent } from './pages/plantilla/imagen/imagen.component';
 import { PostComponent } from './pages/plantilla/post/post.component';
 import { ModalComponent } from './pages/modal/modal.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
+import { AuthInterceptor } from './services/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,9 @@ import { PerfilComponent } from './pages/perfil/perfil.component';
     FormsModule,
     CommonModule,
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -9,6 +9,7 @@ import {
 import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../services/usuario.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -22,7 +23,8 @@ export class RegisterComponent {
   constructor(
     private fb: FormBuilder,
     private usuarioService: UsuarioService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.registerForm = this.fb.group(
       {
@@ -51,14 +53,14 @@ export class RegisterComponent {
         username: this.registerForm.value.username,
         edad: this.registerForm.value.edad,
         email: this.registerForm.value.email,
-        contraseña: this.registerForm.value.password,
+        contrasenia: this.registerForm.value.password,
         descripcion: '', // Puedes agregar un campo de descripción en el formulario si es necesario
         foto: '', // Puedes agregar un campo de foto en el formulario si es necesario
       };
       this.usuarioService.createUsuario(this.usuario).subscribe(
         (response) => {
           this.toastr.success('Usuario registrado correctamente');
-          console.log('Usuario registrado correctamente', response);
+          this.router.navigate(['/login']);
         },
         (error) => {
           if (error.status === 400) {
@@ -84,12 +86,8 @@ export class RegisterComponent {
               'Error de registro'
             );
           }
-          console.error('Error al registrar el usuario', error);
         }
       );
-    } else {
-      // Manejar errores de validación
-      console.log('Formulario no válido');
     }
   }
 

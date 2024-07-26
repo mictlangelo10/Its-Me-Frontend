@@ -4,7 +4,7 @@ export interface Usuario {
   username: string;
   edad: number;
   email: string;
-  contraseña: string;
+  contrasenia: string;
   descripcion?: string;
   foto?: string;
 }

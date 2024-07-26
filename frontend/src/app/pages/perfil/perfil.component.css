@@ -1,16 +1,81 @@
 .profile-pic {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-  }
-  
-  .profile-info {
-    display: flex;
-    align-items: center;
-  }
-  
-  .profile-info .info {
-    margin-left: 20px;
-  }
-  
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.file-input {
+  position: absolute;
+  width: 150px;
+  height: 150px;
+  opacity: 0;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+}
+
+.add-photo-text {
+  position: absolute;
+  top: 150px;
+  left: 46%; /* Cambia este valor para ajustar horizontalmente */
+  transform: translateX(-50%);
+  width: 150px;
+  text-align: center;
+  font-size: 13px;
+  color: #777;
+}
+
+.delete-photo-text {
+  position: absolute;
+  top: 170px; /* Ajusta este valor para colocar el texto debajo de "Actualiza tu foto" */
+  left: 46%;
+  transform: translateX(-50%);
+  width: 150px;
+  text-align: center;
+  font-size: 13px;
+  color: #d9534f; /* Color rojo para resaltar */
+  cursor: pointer;
+}
+
+.profile-info {
+  display: flex;
+  align-items: flex-start;
+  background-color: #fff;
+  position: relative;
+  width: 100%;
+}
+
+.profile-info input,
+.profile-info textarea {
+  width: 80%;
+  box-sizing: border-box; /* Asegura que el padding no aumente el ancho total */
+  margin-bottom: 10px; /* Para espacio entre elementos */
+}
+
+.profile-info .info {
+  margin-left: 10px;
+  flex: 1; /* Esto permite que la sección de información crezca para ocupar el espacio disponible */
+  max-width: 80%; /* Limita el ancho máximo de la descripción */
+}
+
+.profile-info p,
+.profile-info .form-control {
+  word-wrap: break-word; /* Permite que las palabras largas se rompan */
+  overflow-wrap: break-word;
+  max-width: 80%; /* Asegura que la descripción no se salga de la tarjeta */
+}
+
+.text-categoria {
+  color: #fff;
+}
+
+.btn-edit {
+  bottom: 20px;
+  right: 20px;
+  position: relative;
+}
+
+.opaco {
+  opacity: 0.5;
+}
