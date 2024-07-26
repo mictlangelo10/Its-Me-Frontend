@@ -90,13 +90,62 @@
 
   <div class="d-flex justify-content-between align-items-center mb-4">
     <h2 class="text-categoria">Mis Categorías</h2>
-    <button
-      class="btn btn-primary"
-      data-toggle="modal"
-      data-target="#addCategoryModal"
-    >
+    <button class="btn btn-primary" (click)="openCategoryModal()">
       Nueva Categoría
     </button>
+  </div>
+
+  <!-- Modal -->
+  <div *ngIf="showModalCategory" class="category-modal modal">
+    <div class="category-modal-content modal-content">
+      <span class="close" (click)="closeCategoryModal()">&times;</span>
+      <h2>Crear Nueva Categoría</h2>
+      <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
+        <div class="form-group">
+          <label for="titulo">Título</label>
+          <input
+            type="text"
+            id="titulo"
+            formControlName="titulo"
+            class="form-control"
+            required
+          />
+          <div
+            *ngIf="
+              categoryForm.get('titulo')?.invalid &&
+              categoryForm.get('titulo')?.touched
+            "
+            class="text-danger"
+          >
+            El título es requerido.
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="body">Descripción</label>
+          <textarea
+            id="body"
+            formControlName="body"
+            class="form-control"
+          ></textarea>
+        </div>
+        <div class="modal-buttons">
+          <button
+            type="submit"
+            class="btn btn-success"
+            [disabled]="categoryForm.invalid"
+          >
+            Guardar
+          </button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="closeCategoryModal()"
+          >
+            Cancelar
+          </button>
+        </div>
+      </form>
+    </div>
   </div>
 
   <div class="card">

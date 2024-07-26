@@ -5,6 +5,7 @@ import { UsuarioService } from '../../services/usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
+import { CategoriaService } from '../../services/categoria.service';
 
 @Component({
   selector: 'app-perfil',
@@ -15,20 +16,27 @@ export class PerfilComponent {
   hasContent: boolean = false;
   contentData: any;
   showModal: boolean = false;
+  showModalCategory: boolean = false;
   usuario: Usuario | null = null;
   editMode: boolean = false;
   profileForm: FormGroup;
+  categoryForm: FormGroup;
   usernameExists: boolean = false;
   usernameActual: String;
 
   constructor(
     private usuarioService: UsuarioService,
+    private categoriaService: CategoriaService,
     private fb: FormBuilder,
     private toastr: ToastrService
   ) {
     this.profileForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(20)]],
       username: ['', Validators.required],
+      descripcion: [''],
+    });
+    this.categoryForm = this.fb.group({
+      titulo: ['', Validators.required],
       descripcion: [''],
     });
   }
@@ -108,7 +116,6 @@ export class PerfilComponent {
 
   openModal() {
     this.showModal = true;
-    console.log(this.showModal);
   }
 
   closeModal() {
@@ -159,5 +166,42 @@ export class PerfilComponent {
         this.updateUsuario(); // Llama al método para actualizar el usuario
       }
     });
+  }
+
+  openCategoryModal(): void {
+    this.showModalCategory = true;
+  }
+
+  closeCategoryModal(): void {
+    this.showModalCategory = false;
+  }
+
+  saveCategory(): void {
+    if (this.categoryForm.invalid) {
+      this.toastr.error(
+        'El formulario es inválido. Por favor, completa todos los campos requeridos.',
+        'Error'
+      );
+      return;
+    }
+
+    const categoriaData = {
+      id_usuario: this.usuario?.id || 0,
+      titulo: this.categoryForm.value.titulo,
+      descripcion: this.categoryForm.value.descripcion,
+      fecha_pub: new Date(),
+    };
+
+    this.categoriaService.createCategoria(categoriaData).subscribe(
+      (response) => {
+        this.toastr.success('Categoría creada exitosamente', 'Éxito');
+        this.closeCategoryModal();
+        this.categoryForm.reset();
+      },
+      (error) => {
+        console.error('Error al crear la categoría', error);
+        this.toastr.error('Error al crear la categoría', 'Error');
+      }
+    );
   }
 }
