@@ -1,33 +1,118 @@
 <div class="container mt-5">
-    <div class="profile-info mb-4 p-4 border rounded">
-      <div class="d-flex">
-        <img src="https://via.placeholder.com/150" alt="Foto de Perfil" class="profile-pic mr-3">
-        <div>
-          <h3>Nombre del Usuario</h3>
-          <p>Usuario: usuario123</p>
-          <p>Descripción breve del usuario. Aquí puedes agregar una breve biografía o información relevante.</p>
-          <button class="btn btn-secondary">Editar</button>
+  <div *ngIf="usuario" class="profile-info mb-4 p-4 border rounded">
+    <div class="position-relative">
+      <img
+        [src]="usuario.foto || 'https://via.placeholder.com/150'"
+        alt="Foto de Perfil"
+        class="profile-pic mr-3"
+      />
+      <input
+        *ngIf="editMode"
+        type="file"
+        accept="image/*"
+        (change)="onFileSelected($event)"
+        class="file-input"
+      />
+      <p *ngIf="editMode" class="add-photo-text">
+        {{ usuario.foto ? "Actualiza tu foto" : "Agrega una foto" }}
+      </p>
+      <p
+        *ngIf="editMode && usuario.foto"
+        (click)="removePhoto()"
+        class="text-danger delete-photo-text"
+      >
+        Eliminar foto
+      </p>
+    </div>
+    <div class="info">
+      <h3 *ngIf="!editMode">{{ usuario.nombre }}</h3>
+      <div *ngIf="editMode">
+        <input
+          *ngIf="editMode"
+          [(ngModel)]="usuario.nombre"
+          [formControl]="nombre"
+          class="form-control mb-2"
+          placeholder="Ingresa tu nombre completo"
+        />
+        <div
+          *ngIf="nombre.errors?.required && nombre.touched"
+          class="text-danger"
+        >
+          El nombre es requerido.
+        </div>
+        <div
+          *ngIf="nombre.errors?.minlength && nombre.touched"
+          class="text-danger"
+        >
+          El nombre debe tener al menos 20 caracteres.
         </div>
       </div>
+
+      <p *ngIf="!editMode">{{ usuario.username }}</p>
+      <div *ngIf="editMode">
+        <input
+          *ngIf="editMode"
+          [(ngModel)]="usuario.username"
+          [formControl]="username"
+          class="form-control mb-2"
+          placeholder="Ingresa tu username"
+        />
+        <div
+          *ngIf="username.errors?.required && username.touched"
+          class="text-danger"
+        >
+          El username es requerido.
+        </div>
+      </div>
+
+      <p *ngIf="!editMode" [ngClass]="{ opaco: !usuario.descripcion }">
+        {{
+          usuario.descripcion ||
+            "No tienes descripción, date a conocer y agrega una :)"
+        }}
+      </p>
+      <textarea
+        *ngIf="editMode"
+        [(ngModel)]="usuario.descripcion"
+        class="form-control mb-2"
+        placeholder="Describe quien eres"
+      ></textarea>
+
+      <button
+        class="btn btn-secondary position-absolute btn-edit"
+        (click)="editMode ? checkUpdate() : toggleEditMode()"
+        [disabled]="editMode && profileForm.invalid"
+      >
+        {{ editMode ? "Guardar" : "Editar" }}
+      </button>
     </div>
-  
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h2>Mis Categorías</h2>
-      <button class="btn btn-primary" data-toggle="modal" data-target="#addCategoryModal">Nueva Categoría</button>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-categoria">Mis Categorías</h2>
+    <button
+      class="btn btn-primary"
+      data-toggle="modal"
+      data-target="#addCategoryModal"
+    >
+      Nueva Categoría
+    </button>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Categoría</h5>
+      <button class="btn btn-primary" (click)="openModal()">
+        {{ hasContent ? "Ver Contenido" : "Agregar Contenido" }}
+      </button>
     </div>
 
-    <div class="card">
-      <div class="card-body">
-        <h5 class="card-title">Categoría</h5>
-        <button class="btn btn-primary" (click)="openModal()">
-          {{ hasContent ? 'Ver Contenido' : 'Agregar Contenido' }}
-        </button>
-      </div>
-    
-      <app-modal *ngIf="showModal" 
-                 [contentData]="contentData" 
-                 (save)="saveContent($event)" 
-                 (close)="closeModal()">
-      </app-modal>
-    </div>
+    <app-modal
+      *ngIf="showModal"
+      [contentData]="contentData"
+      (save)="saveContent($event)"
+      (close)="closeModal()"
+    >
+    </app-modal>
+  </div>
 </div>

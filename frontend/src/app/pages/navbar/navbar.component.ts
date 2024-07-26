@@ -15,7 +15,7 @@ export class NavbarComponent {
   }
 
   isLoggedIn(): boolean {
-    return sessionStorage.getItem('user') !== null;
+    return sessionStorage.getItem('token') !== null;
   }
 
   confirmLogout() {
@@ -34,7 +34,7 @@ export class NavbarComponent {
   }
 
   logout() {
-    sessionStorage.removeItem('user');
+    sessionStorage.removeItem('token');
     Swal.fire(
       '¡Sesión cerrada!',
       'Has cerrado sesión exitosamente.',

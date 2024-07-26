@@ -12,20 +12,18 @@ export class UsuarioService {
 
   constructor(private http: HttpClient) {}
 
-  getUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(this.apiUrl);
-  }
-
-  getUsuario(id: number): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.apiUrl}/${id}`);
-  }
-
   createUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}/register`, usuario);
   }
 
+  // Método para obtener información del usuario
+  getUserInfo(): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.apiUrl}/me`);
+  }
+
+  // Método para actualizar la información del usuario
   updateUsuario(id: number, usuario: Usuario): Observable<Usuario> {
-    return this.http.put<Usuario>(`${this.apiUrl}/${id}`, usuario);
+    return this.http.put<Usuario>(`${this.apiUrl}/update/${id}`, usuario);
   }
 
   deleteUsuario(id: number): Observable<void> {
@@ -34,5 +32,11 @@ export class UsuarioService {
 
   login(email: string, contraseña: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, contraseña });
+  }
+
+  checkUsername(username: string): Observable<{ exists: boolean }> {
+    return this.http.get<{ exists: boolean }>(
+      `${this.apiUrl}/check-username/${username}`
+    );
   }
 }
