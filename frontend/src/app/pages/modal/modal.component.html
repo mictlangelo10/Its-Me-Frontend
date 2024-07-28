@@ -1,29 +1,48 @@
 <div class="modal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h4 class="modal-title">Seleccionar Plantilla</h4>
-        <button type="button" class="close" (click)="onClose()">&times;</button>
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Seleccionar Plantilla</h4>
+      <button type="button" class="close" (click)="onClose()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div>
+        <label>
+          <input
+            type="radio"
+            [(ngModel)]="selectedTemplate"
+            value="template1"
+          />
+          Lista
+        </label>
+        <label>
+          <input
+            type="radio"
+            [(ngModel)]="selectedTemplate"
+            value="template2"
+          />
+          Lista comparativa
+        </label>
+        <label>
+          <input
+            type="radio"
+            [(ngModel)]="selectedTemplate"
+            value="template3"
+          />
+          Imagen
+        </label>
       </div>
-      <div class="modal-body">
-        <div>
-          <label>
-            <input type="radio" [(ngModel)]="selectedTemplate" value="template1"> Lista
-          </label>
-          <label>
-            <input type="radio" [(ngModel)]="selectedTemplate" value="template2"> Lista comparativa
-          </label>
-          <label>
-            <input type="radio" [(ngModel)]="selectedTemplate" value="template3"> Imagen
-          </label>
-        </div>
-  
-        <ng-container *ngIf="selectedTemplate">
-          <ng-container *ngComponentOutlet="templates[selectedTemplate]"></ng-container>
-        </ng-container>
-      </div>
-      <div class="modal-footer">
-        <button class="btn btn-primary" (click)="onSave()">Guardar</button>
-        <button class="btn btn-secondary" (click)="onClose()">Cancelar</button>
-      </div>
+
+      <ng-container *ngIf="selectedTemplate">
+        <ng-container
+          *ngComponentOutlet="templates[selectedTemplate]"
+          [ngComponentOutletInjector]="componentInjector"
+        ></ng-container>
+      </ng-container>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="onSave()">Guardar</button>
+      <button class="btn btn-secondary" (click)="onClose()">Cancelar</button>
     </div>
   </div>
+</div>

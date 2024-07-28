@@ -1,32 +1,32 @@
 .contacto {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
 }
 
 .social-icons i {
-    margin-right: 10px;
-    font-size: 20px;
-    cursor: pointer;
+  margin-right: 10px;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  width: 100%;
 }
 
 a {
-    color: grey;
-    text-decoration: none;
-    font-size: 10pt;
+  color: grey;
+  text-decoration: none;
+  font-size: 10pt;
 }
 
 a:hover {
-    color: white;
-    text-decoration: underline;
+  color: white;
+  text-decoration: underline;
 }

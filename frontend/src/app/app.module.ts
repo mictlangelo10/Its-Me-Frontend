@@ -17,7 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { ListaComponent } from './pages/plantilla/lista/lista.component';
 import { ListacomparativaComponent } from './pages/plantilla/listacomparativa/listacomparativa.component';
 import { ImagenComponent } from './pages/plantilla/imagen/imagen.component';
-import { PostComponent } from './pages/plantilla/post/post.component';
+
 import { ModalComponent } from './pages/modal/modal.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
@@ -33,7 +33,6 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
     ListaComponent,
     ListacomparativaComponent,
     ImagenComponent,
-    PostComponent,
     ModalComponent,
     PerfilComponent,
   ],

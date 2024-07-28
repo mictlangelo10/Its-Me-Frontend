@@ -1,11 +1,12 @@
-import { ChangeDetectorRef, Component } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Component } from '@angular/core';
 import { Usuario } from '../../models/usuario';
 import { UsuarioService } from '../../services/usuario.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import Swal from 'sweetalert2';
 import { CategoriaService } from '../../services/categoria.service';
+import { Categoria } from '../../models/categoria';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-perfil',
@@ -23,6 +24,9 @@ export class PerfilComponent {
   categoryForm: FormGroup;
   usernameExists: boolean = false;
   usernameActual: String;
+  categorias: Categoria[] = [];
+  selectedCategory: Categoria | null = null;
+  selectedTemplate: string = 'template1'; // Default template
 
   constructor(
     private usuarioService: UsuarioService,
@@ -58,6 +62,7 @@ export class PerfilComponent {
       (user) => {
         this.usuario = user;
         this.usernameActual = this.profileForm.value.username;
+        this.loadCategorias();
       },
       (error) => {
         console.error('Error al cargar la información del usuario', error);
@@ -114,17 +119,17 @@ export class PerfilComponent {
     }
   }
 
-  openModal() {
+  openModal(categoria: Categoria): void {
+    this.selectedCategory = categoria;
     this.showModal = true;
   }
 
-  closeModal() {
+  closeModal(): void {
     this.showModal = false;
   }
 
-  saveContent(data: any) {
-    this.hasContent = true;
-    this.contentData = data;
+  saveContent(): void {
+    this.toastr.success('Contenido guardado exitosamente', 'Éxito');
     this.closeModal();
   }
 
@@ -168,12 +173,19 @@ export class PerfilComponent {
     });
   }
 
-  openCategoryModal(): void {
+  openCategoryModal(categoria: Categoria | null = null): void {
+    this.selectedCategory = categoria;
+    this.categoryForm.patchValue({
+      titulo: categoria?.titulo || '',
+      descripcion: categoria?.descripcion || '',
+    });
     this.showModalCategory = true;
   }
 
   closeCategoryModal(): void {
     this.showModalCategory = false;
+    this.selectedCategory = null;
+    this.categoryForm.reset();
   }
 
   saveCategory(): void {
@@ -192,16 +204,71 @@ export class PerfilComponent {
       fecha_pub: new Date(),
     };
 
-    this.categoriaService.createCategoria(categoriaData).subscribe(
-      (response) => {
-        this.toastr.success('Categoría creada exitosamente', 'Éxito');
-        this.closeCategoryModal();
-        this.categoryForm.reset();
-      },
-      (error) => {
-        console.error('Error al crear la categoría', error);
-        this.toastr.error('Error al crear la categoría', 'Error');
+    if (this.selectedCategory) {
+      // Actualizar categoría existente
+      this.categoriaService
+        .updateCategoria(this.selectedCategory.id!, categoriaData)
+        .subscribe(
+          (response) => {
+            this.toastr.success('Categoría actualizada exitosamente', 'Éxito');
+            this.closeCategoryModal();
+            this.loadCategorias();
+          },
+          (error) => {
+            console.error('Error al actualizar la categoría', error);
+            this.toastr.error('Error al actualizar la categoría', 'Error');
+          }
+        );
+    } else {
+      // Crear nueva categoría
+      this.categoriaService.createCategoria(categoriaData).subscribe(
+        (response) => {
+          this.toastr.success('Categoría creada exitosamente', 'Éxito');
+          this.closeCategoryModal();
+          this.loadCategorias();
+        },
+        (error) => {
+          console.error('Error al crear la categoría', error);
+          this.toastr.error('Error al crear la categoría', 'Error');
+        }
+      );
+    }
+  }
+
+  loadCategorias(): void {
+    if (this.usuario) {
+      this.categoriaService.getCategoriasByUser(this.usuario.id).subscribe(
+        (categorias) => {
+          this.categorias = categorias;
+        },
+        (error) => {
+          console.error('Error al cargar las categorías', error);
+        }
+      );
+    }
+  }
+
+  deleteCategory(categoria: Categoria): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir esto',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminarla',
+      cancelButtonText: 'No, cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.categoriaService.deleteCategoria(categoria.id!).subscribe(
+          (response) => {
+            this.toastr.success('Categoría eliminada exitosamente', 'Éxito');
+            this.loadCategorias();
+          },
+          (error) => {
+            console.error('Error al eliminar la categoría', error);
+            this.toastr.error('Error al eliminar la categoría', 'Error');
+          }
+        );
       }
-    );
+    });
   }
 }

@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
-  styleUrl: './lista.component.css'
+  styleUrl: './lista.component.css',
 })
 export class ListaComponent {
   listTitle: string;
@@ -26,5 +26,4 @@ export class ListaComponent {
     console.log('Título de la Lista:', this.listTitle);
     console.log('Elementos de la Lista:', this.items);
   }
-
 }
