@@ -79,7 +79,7 @@
       ></textarea>
 
       <button
-        class="btn btn-secondary position-absolute btn-edit"
+        class="btn btn-primary position-absolute btn-edit"
         (click)="editMode ? checkUpdate() : toggleEditMode()"
         [disabled]="editMode && profileForm.invalid"
       >
@@ -95,73 +95,154 @@
     </button>
   </div>
 
-  <!-- Modal -->
-  <div *ngIf="showModalCategory" class="category-modal modal">
-    <div class="category-modal-content modal-content">
-      <span class="close" (click)="closeCategoryModal()">&times;</span>
-      <h2>Crear Nueva Categoría</h2>
-      <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
-        <div class="form-group">
-          <label for="titulo">Título</label>
-          <input
-            type="text"
-            id="titulo"
-            formControlName="titulo"
-            class="form-control"
-            required
-          />
+  <div class="row">
+    <div *ngFor="let categoria of categorias" class="col-md-4 mb-3">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">{{ categoria.titulo }}</h5>
+          <p class="card-text">{{ categoria.descripcion }}</p>
           <div
-            *ngIf="
-              categoryForm.get('titulo')?.invalid &&
-              categoryForm.get('titulo')?.touched
-            "
-            class="text-danger"
+            class="card-actions d-flex justify-content-between align-items-center"
           >
-            El título es requerido.
+            <button class="btn btn-primary" (click)="openModal(categoria)">
+              {{ hasContent ? "Ver Contenido" : "Agregar Contenido" }}
+            </button>
+            <div>
+              <button
+                type="button"
+                class="btn btn-outline-info btn-sm"
+                (click)="openCategoryModal(categoria)"
+              >
+                <i class="bi bi-pencil"></i>
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-outline-danger btn-sm"
+                (click)="deleteCategory(categoria)"
+              >
+                <i class="bi bi-trash"></i>
+              </button>
+            </div>
           </div>
         </div>
-        <div class="form-group">
-          <label for="body">Descripción</label>
-          <textarea
-            id="body"
-            formControlName="body"
-            class="form-control"
-          ></textarea>
-        </div>
-        <div class="modal-buttons">
-          <button
-            type="submit"
-            class="btn btn-success"
-            [disabled]="categoryForm.invalid"
-          >
-            Guardar
-          </button>
-          <button
-            type="button"
-            class="btn btn-secondary"
-            (click)="closeCategoryModal()"
-          >
-            Cancelar
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   </div>
+</div>
 
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">Categoría</h5>
-      <button class="btn btn-primary" (click)="openModal()">
-        {{ hasContent ? "Ver Contenido" : "Agregar Contenido" }}
+<!-- Modal para seleccionar plantilla -->
+<div *ngIf="showModal" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h4 class="modal-title">Seleccionar Plantilla</h4>
+      <button type="button" class="close" (click)="closeModal()">
+        &times;
       </button>
     </div>
+    <div class="modal-body">
+      <div>
+        <label>
+          <input
+            type="radio"
+            [(ngModel)]="selectedTemplate"
+            value="template1"
+          />
+          Lista
+        </label>
+        <label>
+          <input
+            type="radio"
+            [(ngModel)]="selectedTemplate"
+            value="template2"
+          />
+          Lista comparativa
+        </label>
+        <label>
+          <input
+            type="radio"
+            [(ngModel)]="selectedTemplate"
+            value="template3"
+          />
+          Imagen
+        </label>
+      </div>
 
-    <app-modal
-      *ngIf="showModal"
-      [contentData]="contentData"
-      (save)="saveContent($event)"
-      (close)="closeModal()"
-    >
-    </app-modal>
+      <div *ngIf="selectedTemplate">
+        <app-lista
+          *ngIf="selectedTemplate === 'template1'"
+          [contentData]="contentData"
+        ></app-lista>
+        <app-listacomparativa
+          *ngIf="selectedTemplate === 'template2'"
+          [contentData]="contentData"
+        ></app-listacomparativa>
+        <app-imagen
+          *ngIf="selectedTemplate === 'template3'"
+          [contentData]="contentData"
+        ></app-imagen>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" (click)="saveContent()">Guardar</button>
+      <button class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div *ngIf="showModalCategory" class="category-modal modal">
+  <div class="category-modal-content modal-content">
+    <span class="close" (click)="closeCategoryModal()">&times;</span>
+    <h2>
+      {{ selectedCategory ? "Editar Categoría" : "Crear Nueva Categoría" }}
+    </h2>
+    <form [formGroup]="categoryForm" (ngSubmit)="saveCategory()">
+      <div class="form-group">
+        <label for="titulo">Título</label>
+        <input
+          type="text"
+          id="titulo"
+          formControlName="titulo"
+          class="form-control"
+          required
+        />
+        <div
+          *ngIf="
+            categoryForm.get('titulo')?.invalid &&
+            categoryForm.get('titulo')?.touched
+          "
+          class="text-danger"
+        >
+          El título es requerido.
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="body">Descripción</label>
+
+        <textarea
+          type="text"
+          id="descripcion"
+          formControlName="descripcion"
+          class="form-control"
+        ></textarea>
+      </div>
+      <div class="modal-buttons">
+        <button
+          type="submit"
+          class="btn btn-success"
+          [disabled]="categoryForm.invalid"
+        >
+          Guardar
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="closeCategoryModal()"
+        >
+          Cancelar
+        </button>
+      </div>
+    </form>
   </div>
 </div>
