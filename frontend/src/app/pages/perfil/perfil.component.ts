@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import { CategoriaService } from '../../services/categoria.service';
 import { Categoria } from '../../models/categoria';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil',
@@ -32,7 +33,8 @@ export class PerfilComponent {
     private usuarioService: UsuarioService,
     private categoriaService: CategoriaService,
     private fb: FormBuilder,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private router: Router
   ) {
     this.profileForm = this.fb.group({
       nombre: ['', [Validators.required, Validators.minLength(20)]],
@@ -271,4 +273,32 @@ export class PerfilComponent {
       }
     });
   }
+
+  deleteProfile(): void {
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir esto',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar perfil',
+      cancelButtonText: 'No, cancelar',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        if (this.usuario) {
+          this.usuarioService.deleteUsuario(this.usuario.id).subscribe(
+            () => {
+              this.toastr.success('Perfil eliminado exitosamente', 'Éxito');
+              this.router.navigate(['/login']);
+            },
+            (error) => {
+              console.error('Error al eliminar el perfil', error);
+              this.toastr.error('Error al eliminar el perfil', 'Error');
+            }
+          );
+        }
+      }
+    });
+  }
+  
 }
+
