@@ -288,7 +288,8 @@ export class PerfilComponent {
           this.usuarioService.deleteUsuario(this.usuario.id).subscribe(
             () => {
               this.toastr.success('Perfil eliminado exitosamente', 'Éxito');
-              this.router.navigate(['/login']);
+              sessionStorage.removeItem('token');
+              this.router.navigate(['/register']);
             },
             (error) => {
               console.error('Error al eliminar el perfil', error);

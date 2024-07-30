@@ -6,4 +6,8 @@ import { Component } from '@angular/core';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent {}
+export class HomeComponent {
+  isLoggedIn(): boolean {
+    return sessionStorage.getItem('token') !== null;
+  }
+}
