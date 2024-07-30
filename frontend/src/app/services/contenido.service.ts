@@ -7,7 +7,7 @@ import { Contenido } from '../models/contenido';
   providedIn: 'root',
 })
 export class ContenidoService {
-  private apiUrl = 'http://your-api-url/contenidos';
+  private apiUrl = 'http://your-api-url/api';
 
   constructor(private http: HttpClient) {}
 
@@ -20,7 +20,7 @@ export class ContenidoService {
   }
 
   createContenido(contenido: Contenido): Observable<Contenido> {
-    return this.http.post<Contenido>(this.apiUrl, contenido);
+    return this.http.post<Contenido>(`${this.apiUrl}/contenido`, contenido);
   }
 
   updateContenido(id: number, contenido: Contenido): Observable<Contenido> {
