@@ -8,9 +8,10 @@
     </div>
     <div class="description">
       <h1>
-        
+        BIENVENIDO A IT'S ME, EL LUGAR EN EL QUE PUEDES COMPARTIR TUS GUSTOS 
+        Y MOSTRARLOS COMO QUIERAS 
       </h1>
-      <button class="book-visit">Registrate</button>
+      <button *ngIf="!isLoggedIn()" class="book-visit" [routerLink]="['/register']">Registrate</button>
     </div>
   </div>
 </div>

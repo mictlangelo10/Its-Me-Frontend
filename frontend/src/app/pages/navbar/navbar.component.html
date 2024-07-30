@@ -1,8 +1,6 @@
 <header>
   <div class="social-icons">
-    <i class="fa fa-instagram"></i>
-    <i class="fa fa-facebook"></i>
-    <i class="fa fa-linkedin"></i>
+    <a *ngIf="isLoggedIn()" [routerLink]="['/perfil']" class="header-link">Ver Mi Perfil</a>
   </div>
   <div class="title">
     <a [routerLink]="['/']" class="header-link">IT'S ME</a>
