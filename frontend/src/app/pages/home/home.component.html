@@ -8,10 +8,16 @@
     </div>
     <div class="description">
       <h1>
-        BATHHOUSE IS A HOME FOR PEOPLE WHO STRIVE TO LOOK, FEEL AND PERFORM
-        THEIR VERY BEST.
+        BIENVENIDO A IT'S ME, EL LUGAR EN EL QUE PUEDES COMPARTIR TUS GUSTOS Y
+        MOSTRARLOS COMO QUIERAS
       </h1>
-      <button class="book-visit">Book Your Visit</button>
+      <button
+        *ngIf="!isLoggedIn()"
+        class="book-visit"
+        [routerLink]="['/register']"
+      >
+        Registrate
+      </button>
     </div>
   </div>
 </div>

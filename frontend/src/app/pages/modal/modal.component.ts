@@ -23,9 +23,9 @@ export class ModalComponent {
 
   selectedTemplate: string = 'template1'; // Default to "Lista"
   templates = {
-    template1: ListaComponent,
-    template2: ListacomparativaComponent,
-    template3: ImagenComponent,
+    ListaComponent,
+    ListacomparativaComponent,
+    ImagenComponent,
   };
 
   constructor(private injector: Injector) {}

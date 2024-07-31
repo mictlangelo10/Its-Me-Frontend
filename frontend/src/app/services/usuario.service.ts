@@ -26,10 +26,6 @@ export class UsuarioService {
     return this.http.put<Usuario>(`${this.apiUrl}/update/${id}`, usuario);
   }
 
-  deleteUsuario(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
-  }
-
   login(email: string, contraseña: string): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/login`, { email, contraseña });
   }
@@ -38,5 +34,9 @@ export class UsuarioService {
     return this.http.get<{ exists: boolean }>(
       `${this.apiUrl}/check-username/${username}`
     );
+  }
+
+  deleteUsuario(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/delete/${id}`);
   }
 }

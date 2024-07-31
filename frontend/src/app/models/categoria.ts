@@ -4,4 +4,5 @@ export interface Categoria {
   titulo: string;
   descripcion: string;
   fecha_pub: Date;
+  hasContent?: boolean; // Propiedad para indicar si la categoría tiene contenido
 }
