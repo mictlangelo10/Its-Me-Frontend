@@ -1,40 +1,53 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-listacomparativa',
   templateUrl: './listacomparativa.component.html',
-  styleUrl: './listacomparativa.component.css'
+  styleUrls: ['./listacomparativa.component.css'],
 })
 export class ListacomparativaComponent {
-  comparativaTitulo: string;
-  columna1Titulo: string;
-  columna2Titulo: string;
+  @Output() comparativaCambiada = new EventEmitter<string>();
+  comparativaTitulo: string = '';
+  columna1Titulo: string = '';
+  columna2Titulo: string = '';
   columna1Rows: string[] = [];
   columna2Rows: string[] = [];
 
   agregarFilaColumna1(): void {
-    this.columna1Rows.push('');
+    this.columna1Rows = [...this.columna1Rows, ''];
+    this.onChange();
   }
 
   agregarFilaColumna2(): void {
-    this.columna2Rows.push('');
+    this.columna2Rows = [...this.columna2Rows, ''];
+    this.onChange();
   }
 
   eliminarFilaColumna1(index: number): void {
-    this.columna1Rows.splice(index, 1);
+    this.columna1Rows = this.columna1Rows.filter((_, i) => i !== index);
+    this.onChange();
   }
 
   eliminarFilaColumna2(index: number): void {
-    this.columna2Rows.splice(index, 1);
+    this.columna2Rows = this.columna2Rows.filter((_, i) => i !== index);
+    this.onChange();
   }
 
-  guardar(): void {
-    // Implementa la lógica para guardar los datos
-    console.log('Título Comparativa:', this.comparativaTitulo);
-    console.log('Título Columna 1:', this.columna1Titulo);
-    console.log('Título Columna 2:', this.columna2Titulo);
-    console.log('Filas Columna 1:', this.columna1Rows);
-    console.log('Filas Columna 2:', this.columna2Rows);
+  onChange(): void {
+    const jsonBody = JSON.stringify({
+      columna1: {
+        titulo: this.columna1Titulo,
+        filas: this.columna1Rows,
+      },
+      columna2: {
+        titulo: this.columna2Titulo,
+        filas: this.columna2Rows,
+      },
+    });
+    this.comparativaCambiada.emit(jsonBody);
   }
 
+  trackByFn(index: number): number {
+    return index; // o cualquier propiedad única de los items
+  }
 }

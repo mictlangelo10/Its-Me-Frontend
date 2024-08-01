@@ -1,33 +1,46 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Plantilla } from '../models/plantilla';
+import { ContenidoPlantilla, Plantilla } from '../models/plantilla';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PlantillaService {
-  private apiUrl = 'http://your-api-url/plantillas';
+  private apiUrl = `${environment.apiUrl}/plantillas`;
+  private apiUrlContenido = `${environment.apiUrl}/contenido`;
 
   constructor(private http: HttpClient) {}
 
   getPlantillas(): Observable<Plantilla[]> {
     return this.http.get<Plantilla[]>(this.apiUrl);
   }
-
-  getPlantilla(id: number): Observable<Plantilla> {
-    return this.http.get<Plantilla>(`${this.apiUrl}/${id}`);
+  // Crear contenido
+  createContent(contenido: ContenidoPlantilla): Observable<ContenidoPlantilla> {
+    return this.http.post<ContenidoPlantilla>(this.apiUrlContenido, contenido);
   }
 
-  createPlantilla(plantilla: Plantilla): Observable<Plantilla> {
-    return this.http.post<Plantilla>(this.apiUrl, plantilla);
+  // Obtener contenido por categoría
+  getContentByCategory(id_cat: number): Observable<ContenidoPlantilla[]> {
+    return this.http.get<ContenidoPlantilla[]>(
+      `${this.apiUrlContenido}/${id_cat}`
+    );
   }
 
-  updatePlantilla(id: number, plantilla: Plantilla): Observable<Plantilla> {
-    return this.http.put<Plantilla>(`${this.apiUrl}/${id}`, plantilla);
+  checkContentExistence(
+    id_cat: number
+  ): Observable<{ contentExists: boolean }> {
+    return this.http.get<{ contentExists: boolean }>(
+      `${this.apiUrlContenido}/existencia/${id_cat}`
+    );
   }
 
-  deletePlantilla(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  // Actualizar contenido existente
+  updateContent(contenido: ContenidoPlantilla): Observable<ContenidoPlantilla> {
+    return this.http.put<ContenidoPlantilla>(
+      `${this.apiUrlContenido}/${contenido.id}`,
+      contenido
+    );
   }
 }
