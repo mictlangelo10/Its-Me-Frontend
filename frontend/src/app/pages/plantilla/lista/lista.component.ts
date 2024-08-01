@@ -1,29 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-lista',
   templateUrl: './lista.component.html',
-  styleUrl: './lista.component.css',
+  styleUrls: ['./lista.component.css'],
 })
 export class ListaComponent {
-  listTitle: string;
-  items: string[] = ['', '', '']; // Iniciar con tres elementos obligatorios
+  @Output() listaCambiada = new EventEmitter<string>();
+  listTitle: string = '';
+  items: string[] = ['', '', ''];
 
   agregarElemento(): void {
-    this.items.push('');
+    this.listTitle;
+    this.items = [...this.items, '']; // Copia del array con el nuevo elemento
+    //console.log('Items', this.items);
+    this.onChange();
   }
 
   eliminarElemento(index: number): void {
     if (this.items.length > 3) {
-      this.items.splice(index, 1);
+      this.items = this.items.filter((_, i) => i !== index); // Copia del array sin el elemento eliminado
+      this.onChange();
     } else {
       alert('La lista debe tener al menos tres elementos.');
     }
   }
 
-  guardar(): void {
-    // Implementa la lógica para guardar los datos
-    console.log('Título de la Lista:', this.listTitle);
-    console.log('Elementos de la Lista:', this.items);
+  onChange(): void {
+    const jsonBody = JSON.stringify({ elementos: this.items });
+    //console.log(jsonBody);
+    this.listaCambiada.emit(jsonBody);
+  }
+
+  trackByFn(index: number, item: any): number {
+    return index; // o cualquier propiedad única de los items
   }
 }
