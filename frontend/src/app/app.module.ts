@@ -21,6 +21,7 @@ import { ImagenComponent } from './pages/plantilla/imagen/imagen.component';
 import { ModalComponent } from './pages/modal/modal.component';
 import { PerfilComponent } from './pages/perfil/perfil.component';
 import { AuthInterceptor } from './services/auth-interceptor.service';
+import { AuthGuard } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { AuthInterceptor } from './services/auth-interceptor.service';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    AuthGuard, // Agrega el guardián aquí
   ],
   bootstrap: [AppComponent],
 })
